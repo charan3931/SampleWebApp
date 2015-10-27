@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>SampleWebApp</display-name>
+
+	<security-constraint>
+		<display-name>Protected Backend</display-name>
+		<web-resource-collection>
+			<web-resource-name>Protected Backend</web-resource-name>
+			<!-- Define the context-relative URL(s) to be protected -->
+			<url-pattern>/backend/*</url-pattern>
+			<!-- If you list http methods, only those methods are protected -->
+			<http-method>GETLIB</http-method>
+			<http-method>COPY</http-method>
+			<http-method>MOVE</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>PROPFIND</http-method>
+			<http-method>GET</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>PUT</http-method>
+			<http-method>MKCOL</http-method>
+			<http-method>PROPPATCH</http-method>
+			<http-method>LOCK</http-method>
+			<http-method>UNLOCK</http-method>
+			<http-method>VERSION-CONTROL</http-method>
+			<http-method>CHECKIN</http-method>
+			<http-method>CHECKOUT</http-method>
+			<http-method>UNCHECKOUT</http-method>
+			<http-method>REPORT</http-method>
+			<http-method>UPDATE</http-method>
+			<http-method>CANCELUPLOAD</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<!-- Anyone with one of the listed roles may access this area -->
+			<role-name>*</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<!-- Default login configuration uses form-based authentication -->
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>Nutzeranmeldung</realm-name>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/error.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<!-- Security roles referenced by this web application -->
+	<security-role>
+		<role-name>*</role-name>
+	</security-role>
+
+	<filter>
+		<filter-name>UserDataFilter</filter-name>
+		<filter-class>de.starwit.auth.userdata.UserDataFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>UserDataFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>
